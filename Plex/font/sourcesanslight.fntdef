@@ -1,0 +1,3 @@
+AddFontToProcess "C:\Windows\Fonts\Source Sans Pro\Source Sans Pro Light.ttf"
+SelectFont “WE:400,FN:"Source Sans Pro Light"”
+ImportRange 32 126

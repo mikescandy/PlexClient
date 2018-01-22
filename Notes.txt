@@ -1,0 +1,151 @@
+{
+   "MediaContainer":{
+      "size":5,
+      "allowSync":false,
+      "identifier":"com.plexapp.plugins.library",
+      "mediaTagPrefix":"/system/bundle/media/flags/",
+      "mediaTagVersion":1513159326,
+      "title1":"Plex Library",
+      "Directory":[
+         {
+            "allowSync":false,
+            "art":"/:/resources/movie-fanart.jpg",
+            "composite":"/library/sections/9/composite/1516604632",
+            "filters":true,
+            "refreshing":false,
+            "thumb":"/:/resources/video.png",
+            "key":"9",
+            "type":"movie",
+            "title":"Documentaries",
+            "agent":"com.plexapp.agents.none",
+            "scanner":"Plex Video Files Scanner",
+            "language":"xn",
+            "uuid":"e16f06e3-ba0a-4905-bfda-f5b906971309",
+            "updatedAt":1508355563,
+            "createdAt":1508355563,
+            "Location":[
+               {
+                  "id":10,
+                  "path":"E:\\Videos\\Documentaries"
+               }
+            ]
+         },
+         {
+            "allowSync":false,
+            "art":"/:/resources/movie-fanart.jpg",
+            "composite":"/library/sections/6/composite/1516604634",
+            "filters":true,
+            "refreshing":false,
+            "thumb":"/:/resources/movie.png",
+            "key":"6",
+            "type":"movie",
+            "title":"Movies",
+            "agent":"com.plexapp.agents.imdb",
+            "scanner":"Plex Movie Scanner",
+            "language":"en",
+            "uuid":"c1b1b672-7c4b-4545-a0d7-cee5f23922cb",
+            "updatedAt":1508351306,
+            "createdAt":1508351306,
+            "Location":[
+               {
+                  "id":6,
+                  "path":"E:\\Videos\\Movies"
+               }
+            ]
+         },
+         {
+            "allowSync":false,
+            "art":"/:/resources/artist-fanart.jpg",
+            "composite":"/library/sections/8/composite/1516604652",
+            "filters":true,
+            "refreshing":false,
+            "thumb":"/:/resources/artist.png",
+            "key":"8",
+            "type":"artist",
+            "title":"Music",
+            "agent":"com.plexapp.agents.lastfm",
+            "scanner":"Plex Music Scanner",
+            "language":"en",
+            "uuid":"cc4844ab-633b-4e51-ae34-8837a6da57a4",
+            "updatedAt":1513395945,
+            "createdAt":1508353706,
+            "Location":[
+               {
+                  "id":9,
+                  "path":"E:\\Music\\iTunes\\iTunes Media\\Music"
+               }
+            ]
+         },
+         {
+            "allowSync":false,
+            "art":"/:/resources/movie-fanart.jpg",
+            "composite":"/library/sections/10/composite/1516604653",
+            "filters":true,
+            "refreshing":false,
+            "thumb":"/:/resources/video.png",
+            "key":"10",
+            "type":"movie",
+            "title":"Stand-Up",
+            "agent":"com.plexapp.agents.none",
+            "scanner":"Plex Video Files Scanner",
+            "language":"xn",
+            "uuid":"ba6be9b3-eeb4-47ab-8708-7844ebaa4c94",
+            "updatedAt":1508355582,
+            "createdAt":1508355582,
+            "Location":[
+               {
+                  "id":11,
+                  "path":"E:\\Videos\\Stand-Up"
+               }
+            ]
+         },
+         {
+            "allowSync":false,
+            "art":"/:/resources/show-fanart.jpg",
+            "composite":"/library/sections/7/composite/1516604655",
+            "filters":true,
+            "refreshing":false,
+            "thumb":"/:/resources/show.png",
+            "key":"7",
+            "type":"show",
+            "title":"TV Shows",
+            "agent":"com.plexapp.agents.thetvdb",
+            "scanner":"Plex Series Scanner",
+            "language":"en",
+            "uuid":"1e59e769-969d-48c7-8815-d498a31cd459",
+            "updatedAt":1508351359,
+            "createdAt":1508351359,
+            "Location":[
+               {
+                  "id":7,
+                  "path":"E:\\Videos\\TV"
+               }
+            ]
+         }
+      ]
+   }
+}
+
+Outline of activity:
+
+FRMHOME assigns List<Directories> return of Server.GetLibrarySections() to 'directories'
+GetLibrarySections() instantiates MediaContainer 'm'
+MediaContainer constructor calls Load()
+Load() builds API request and assigns response to var 'm'
+Load() copies 'm' response to 'this' (object in creation)
+For each directory in the object's Directories list, assign user and server to the attributes
+Server returns directories attribute of 'm'
+
+Plan: 
+
+FRMHOME calls Server.GetLibrarySections
+GetLibrarySections instantiates new MediaContainer
+MediaContainer calls Load()
+> Get JSON
+> Parse
+> Create Libraries
+> Return as normal
+
+Leftoff:
+1-22-2018
+> Not finding any servers for some reason.
