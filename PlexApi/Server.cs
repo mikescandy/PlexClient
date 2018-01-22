@@ -34,8 +34,8 @@ namespace PlexAPI
 
 		protected override string GetBaseUrl()
 		{
-			return "http://" + address + ":" + port;
-		}
+            return "http://" + address + ":" + port;
+        }
 
 
         // TODO left off here
@@ -45,12 +45,12 @@ namespace PlexAPI
             return m.directories;
         }
 
-		public List<Directory> GetLibrarySections()
+		public List<PlexItem> GetLibrarySections()
 		{
             // TODO remove
             // m.directories is null because M is null
 			MediaContainer m = new MediaContainer(user, this, "/library/sections");
-			return m.directories;
+			return m.items;
 		}
         
         

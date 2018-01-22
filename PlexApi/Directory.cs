@@ -34,12 +34,7 @@ namespace PlexAPI
 		public Directory (PlexItem item) : base(item) {}
 		public Directory (User user, Server server, String uri) : base(user, server, uri) {}
 
-		/*public Directory (Directory d)
-		{
-			Utils.CopyFrom<Directory, Directory>(this, d);
-		}*/
-
-		public List<T> GetChildren<T>() where T : PlexItem
+        public List<T> GetChildren<T>() where T : PlexItem
 		{
 			var request = new RestRequest();
 			request.Resource = uri;

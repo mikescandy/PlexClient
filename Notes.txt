@@ -1,3 +1,5 @@
+Left off at PlexItem:53, getting null array of items for movie children
+
 {
    "MediaContainer":{
       "size":5,

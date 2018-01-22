@@ -10,16 +10,19 @@ using System.Windows.Forms;
 using PlexAPI;
 using System.Threading;
 using Newtonsoft.Json;
-using System.IO;
 
 namespace Plex
 {
     public partial class FrmHome : Form
     {
         MyPlex plex= new MyPlex();
+        Server selectedServer;
+        PlexItem selectedLibrary;
         List<Server> servers;
-        List<PlexAPI.Directory> directories;
+        List<PlexItem> libraries, libraryItems;
         List<string> serverNames = new List<string>();
+        List<string> directoryTitles = new List<string>();
+
         public FrmHome(User user)
         {
             InitializeComponent();
@@ -35,21 +38,46 @@ namespace Plex
             LboxServers.EndUpdate();
 
         }
-        private void LboxServers_Click(object sender, EventArgs e)
+
+        private void BtnServerSelect_Click(object sender, EventArgs e)
         {
-            Server selectedServer = servers[LboxServers.SelectedIndex];
-            // Calls method which will return null data but grabs a working JSON object and writes to a text file
-            directories = selectedServer.GetLibrarySections();
+            // TODO kill default selection
+            selectedServer = servers[LboxServers.SelectedIndex];
+            libraries = selectedServer.GetLibrarySections();
+
+            foreach (PlexItem p in libraries)
+            {
+                directoryTitles.Add(p.title);
+            }
+
+            LboxLibraries.BeginUpdate();
+            LboxLibraries.DataSource = directoryTitles;
+            LboxLibraries.EndUpdate();
+            GbLibraries.Visible = true;
+            BtnLibraryBackToServer.Visible = true;
+            BtnServerSelect.Visible = false;
         }
 
-        private void LboxLibraries_Click(object sender, EventArgs e)
+        private void BtnLibraryBackToServer_Click(object sender, EventArgs e)
         {
-            
+            GbLibraries.Visible = false;
+            BtnLibraryBackToServer.Visible = false;
+            BtnServerSelect.Visible = true;
         }
 
-        private void LboxServers_SelectedIndexChanged(object sender, EventArgs e)
+        private void BtnLibrarySelect_Click(object sender, EventArgs e)
         {
+            selectedLibrary = libraries[LboxLibraries.SelectedIndex];
+            libraryItems = selectedLibrary.GetChildren<PlexItem>();
 
+            int x = 0;
+            foreach (PlexItem p in libraryItems)
+            {
+                x++;
+                Console.WriteLine("Item {0}: {1}", x, p.title);
+            }
+            BtnLibrarySelect.Visible = false;
         }
+
     }
 }

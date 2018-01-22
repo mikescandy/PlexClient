@@ -69,7 +69,7 @@ namespace PlexAPI
 			var response = client.Execute(request);
 
 			if (response.ErrorException != null)
-			{// TODO Left off here, Optiplex is down so no resoinse from the server
+			{// TODO Left off here, Optiplex is down so no response from the server
 				throw response.ErrorException;
 			}
 			return response.Content;

@@ -12,6 +12,7 @@ namespace PlexAPI
     {
         public List<Directory> directories { get; set; }
         public List<DirectoryTypes.Show> showDirectories { get; set; }
+        public List<PlexItem> items { get; set; }
 
         public int size { get; set; }
         public bool allowSync { get; set; }
@@ -61,8 +62,7 @@ namespace PlexAPI
         public List<Photo> photos { get; set; }
 
         public MediaContainer() { }
-        // TODO remove
-        // This constructor is called to assign data to M in GetLibrarySections(), which calls Load()
+
         public MediaContainer(User user, Server server, String uri) : base(user, server, uri) {
             Load();
         }
@@ -74,21 +74,10 @@ namespace PlexAPI
             request.Resource = uri;
 
             showDirectories = new List<DirectoryTypes.Show>();
-            string jsonReply = "";
-            // var m = Execute<MediaContainer>(request, user);
-            jsonReply = Execute(request, user);
-            // Utils.CopyFrom<MediaContainer, MediaContainer> (this, m);
-            // Loop through directories and add the user, server and uri
-            /*
-            for (var i = 0; i < directories.Count; i++) {
-                ProcessDirectory(directories[i], i);
-            }
-            */
-            // TODO left off here, want to test method
-            response = ParseJsonString(jsonReply);
+            response = ParseJsonString(Execute(request, user));
             if(response != null)
             {
-                LoadJson(response);
+                GetDirectories(response);
             }
             else
             {
@@ -97,14 +86,22 @@ namespace PlexAPI
 
         }
 
-        public void LoadJson(JObject response)
+        // Clear list and populate with directories
+        public void GetDirectories(JObject response)
         {
+            items = new List<PlexItem>();
             JObject library;
+            string title, type;
             JArray libraries = JArray.Parse(response.GetValue("Directory").ToString());
 
+            // For each library item in the array
             for (int x = 0; x < int.Parse(response.GetValue("size").ToString()); x++)
             {
-                
+                library = JObject.Parse(libraries[x].ToString());
+                title = library.GetValue("title").ToString();
+                type = library.GetValue("type").ToString();
+
+                items.Add(new PlexItem(user, server, title, type));
             }
         }
 
