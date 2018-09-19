@@ -55,15 +55,17 @@ namespace PlexAPI
             {
                 items[i].user = user;
                 items[i].server = server;
-                if (items[i].key.StartsWith("/"))
-                {
-                    items[i].uri = items[i].key;
-                }
-                else
-                {
-                    items[i].uri = uri + "/" + items[i].key;
-                }
-
+				if(items[i].key != null)
+				{
+					if (items[i].key.StartsWith("/"))
+					{
+						items[i].uri = items[i].key;
+					}
+					else
+					{
+						items[i].uri = uri + "/" + items[i].key;
+					}
+				}
             }
             return items;
         }

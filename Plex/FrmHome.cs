@@ -19,65 +19,106 @@ namespace Plex
         Server selectedServer;
         PlexItem selectedLibrary;
         List<Server> servers;
-        List<PlexItem> libraries, libraryItems;
+        List<PlexItem> libraries;
         List<string> serverNames = new List<string>();
-        List<string> directoryTitles = new List<string>();
 
         public FrmHome(User user)
         {
             InitializeComponent();
             this.Text = "Welcome, " + user.username;
             servers = plex.GetServers(user);
-            for(int x = 0; x < servers.Count;x++)
-            {
-                serverNames.Add(servers[x].name);
-            }
 
-            LboxServers.BeginUpdate();
-            LboxServers.DataSource = serverNames;
-            LboxServers.EndUpdate();
-
+			if(servers.Count > 0)
+			{
+				// Populate list of servers
+				for (int x = 0; x < servers.Count; x++)
+				{
+					serverNames.Add(servers[x].name);
+				}
+				// Set combo box data to list of servers
+				cbServers.BeginUpdate();
+				cbServers.DataSource = serverNames;
+				cbServers.EndUpdate();
+				selectedServer = servers[0];
+				UpdateLibraries(selectedServer);
+			}
+            
         }
 
-        private void BtnServerSelect_Click(object sender, EventArgs e)
-        {
-            // TODO kill default selection
-            selectedServer = servers[LboxServers.SelectedIndex];
-            libraries = selectedServer.GetLibrarySections();
+		// Set selected server to match combo box index on selected index changed
+		private void cbServers_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			selectedServer = servers[cbServers.SelectedIndex];
+			UpdateLibraries(selectedServer);
+		}
 
-            foreach (PlexItem p in libraries)
-            {
-                directoryTitles.Add(p.title);
-            }
+		private void LBoxLibraries_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			selectedLibrary = libraries[LBoxLibraries.SelectedIndex];
+			switch (selectedLibrary.type)
+			{
+				case "movie":
+					lblSub1.Text = "Movie";
+					break;
+				case "artist":
+					lblSub1.Text = "Artist";
+					break;
+				case "show":
+					lblSub1.Text = "Series";
+					break;
+				default:
+					lblSub1.Text = "Sub-Category 1";
+					break;
+			}
 
-            LboxLibraries.BeginUpdate();
-            LboxLibraries.DataSource = directoryTitles;
-            LboxLibraries.EndUpdate();
-            GbLibraries.Visible = true;
-            BtnLibraryBackToServer.Visible = true;
-            BtnServerSelect.Visible = false;
-        }
+			List<string> subcollection1 = new List<string>();
+			foreach(PlexItem pi in selectedLibrary.GetChildren<PlexItem>())
+			{
+				if(pi.title != null)
+				{
+					subcollection1.Add(pi.title);
+					Console.WriteLine(pi.title);
+				}
+			}
 
-        private void BtnLibraryBackToServer_Click(object sender, EventArgs e)
-        {
-            GbLibraries.Visible = false;
-            BtnLibraryBackToServer.Visible = false;
-            BtnServerSelect.Visible = true;
-        }
+			Console.WriteLine("length: " + subcollection1.Count);
 
-        private void BtnLibrarySelect_Click(object sender, EventArgs e)
-        {
-            selectedLibrary = libraries[LboxLibraries.SelectedIndex];
-            libraryItems = selectedLibrary.GetChildren<PlexItem>();
+			if(subcollection1.Count > 0)
+			{
+				LBoxSub1.BeginUpdate();
+				LBoxSub1.DataSource = subcollection1;
+				LBoxSub1.EndUpdate();
+				LBoxSub1.Enabled = true;
+			}
+			else
+			{
+				subcollection1.Add("No items found");
+				LBoxSub1.BeginUpdate();
+				LBoxSub1.DataSource = subcollection1;
+				LBoxSub1.EndUpdate();
+				LBoxSub1.Enabled = false;
+			}
+			panelSub1.Visible = true;
+		}
 
-            int x = 0;
-            foreach (PlexItem p in libraryItems)
-            {
-                x++;
-                Console.WriteLine("Item {0}: {1}", x, p.title);
-            }
-            BtnLibrarySelect.Visible = false;
-        }
+		private void UpdateLibraries(Server server)
+		{
+			List<string> libraryTitles = new List<string>();
+			libraries = server.GetLibrarySections();
+			foreach (PlexItem pi in libraries)
+			{
+				libraryTitles.Add(pi.title);
+				Console.WriteLine(pi.type);
+			}
 
-    }
+			LBoxLibraries.BeginUpdate();
+			LBoxLibraries.DataSource = libraryTitles;
+			LBoxLibraries.EndUpdate();
+		}
+
+		private void LBoxSub1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

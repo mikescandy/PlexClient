@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlexAPI", "PlexApi\PlexAPI.csproj", "{5850507E-BDB9-4C71-BB61-3BFD363DF56D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlexAPI-TestConsole", "PlexApi-TestConsole\PlexAPI-TestConsole.csproj", "{279D2C43-F8AB-4102-8B21-8B5E1AEA7C4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlexAPITestConsole", "PlexApi-TestConsole\PlexAPITestConsole.csproj", "{279D2C43-F8AB-4102-8B21-8B5E1AEA7C4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plex", "Plex\Plex.csproj", "{0675CBF2-5766-4B83-ADF9-FD865C5F5B9D}"
 EndProject

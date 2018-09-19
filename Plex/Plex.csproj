@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Plex.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -100,6 +103,10 @@
     <Content Include="img\static.jpeg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PlexApi-TestConsole\PlexAPITestConsole.csproj">
+      <Project>{279d2c43-f8ab-4102-8b21-8b5e1aea7c4e}</Project>
+      <Name>PlexAPITestConsole</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlexApi\PlexAPI.csproj">
       <Project>{5850507e-bdb9-4c71-bb61-3bfd363df56d}</Project>
       <Name>PlexAPI</Name>

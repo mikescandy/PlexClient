@@ -88,7 +88,8 @@ namespace Test
 		static void Sections()
 		{
 			Console.WriteLine ("Looking for library sections on " + server.name);
-			List<Directory> sections = server.GetLibrarySections ();
+			//List<Directory> sections = server.GetLibrarySections();
+			List<Directory> sections = new List<Directory>();
 			for (var j = 0; j < sections.Count; j++) {
 				Console.WriteLine ("Found Section [" + j + "]: " + sections[j].title);
 				Console.WriteLine ("Type: " + sections[j].type);
